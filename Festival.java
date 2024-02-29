@@ -57,7 +57,6 @@ public class Festival {
      * valor enumerado
      */
     public Mes getMes() {
-        //TODO
         switch(this.fechaInicio.getMonthValue()){
             case 1:
                 return Mes.ENERO;
@@ -104,7 +103,6 @@ public class Festival {
      * en un fecha anterior a otro
      */
     public boolean empiezaAntesQue(Festival otro) {
-        //TODO
         return this.fechaInicio.isBefore(otro.getFechaInicio());
     }
 
@@ -115,7 +113,6 @@ public class Festival {
      * en un fecha posteior a otro
      */
     public boolean empiezaDespuesQue(Festival otro) {
-        //TODO
         return this.fechaInicio.isAfter(otro.getFechaInicio());
     }
 
@@ -124,13 +121,9 @@ public class Festival {
      * @return true si el festival ya ha concluido
      */
     public boolean haConcluido() {
-        //TODO
         LocalDate fechaActual = LocalDate.now();
-        int numeroDiaActual = fechaActual.getDayOfMonth();
-        Month mesActual = fechaActual.getMonth();
-        int anyoActual = fechaActual.getYear();
-        return this.fechaInicio.plusDays(this.duracion).isAfter(LocalDate.of(anyoActual,mesActual,numeroDiaActual));
-
+        LocalDate fechaFinalFestival = this.fechaInicio.plusDays(this.duracion);
+        return fechaActual.isAfter(fechaFinalFestival);
     }
 
     /**
@@ -140,9 +133,8 @@ public class Festival {
      */
     @Override
     public String toString() {
-       //TODO
         StringBuilder sb = new StringBuilder();
-        sb.append(getNombre()).append("\t").append(getEstilos()).append("\n");
+        sb.append(getNombre()).append("\t\t\t").append(getEstilos()).append("\n");
         sb.append(getLugar()).append("\t").append("\n");
 
 
@@ -151,16 +143,16 @@ public class Festival {
             sb.append(this.getFechaInicio()).append("\t");
         }
         else {
-            sb.append(this.getFechaInicio()).append("  -  ").append(this.getFechaInicio().plusDays(this.getDuracion()));
+            sb.append(this.getFechaInicio()).append(" - ").append(this.getFechaInicio().plusDays(this.getDuracion()));
         }
 
 
         if (this.haConcluido()){
-            sb.append("(concluido)");
+            sb.append(" (concluido)\n");
         }
         else {
             if (LocalDate.now().isAfter(this.fechaInicio) && LocalDate.now().isBefore(this.fechaInicio.plusDays(this.duracion))){
-                sb.append("(ON)");
+                sb.append(" (ON)\n");
             }
             else {
                 LocalDate fechaActual = LocalDate.now();
@@ -168,7 +160,7 @@ public class Festival {
                 Month mesActual = fechaActual.getMonth();
                 int anyoActual = fechaActual.getYear();
                 int tiempoTardado = LocalDate.of(anyoActual,mesActual,numeroDiaActual).getDayOfYear() - this.getFechaInicio().getDayOfYear();
-                sb.append("(Quedan ").append(tiempoTardado).append(" dias)\n");
+                sb.append(" (Quedan ").append(tiempoTardado).append(" dias)\n");
             }
         }
 

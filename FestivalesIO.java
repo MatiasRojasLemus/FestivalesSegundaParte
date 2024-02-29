@@ -84,7 +84,7 @@ public class FestivalesIO {
         HashSet<Estilo> estilos = new HashSet<>();
         int indice = 4;
         while (indice < array.length){
-            switch (array[indice].toUpperCase()){
+            switch (array[indice].toUpperCase().trim()){
                 case "HIPHOP":
                     estilos.add(Estilo.HIPHOP);
                     break;
@@ -115,9 +115,11 @@ public class FestivalesIO {
 
                 case "PUNK":
                     estilos.add(Estilo.PUNK);
+                    break;
 
                 case "BLUES":
                     estilos.add(Estilo.BLUES);
+                    break;
             }
             indice++;
         }
