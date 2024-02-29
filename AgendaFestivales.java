@@ -82,8 +82,15 @@ public class AgendaFestivales {
     @Override
     public String toString() {
         //TODO
-        
-        return null;
+        Set<Mes> conjuntoEntradas = this.agenda.keySet();
+        ArrayList<Festival> festivales;
+        StringBuilder sb = new StringBuilder();
+
+        for (Mes entrada: conjuntoEntradas){
+            festivales = this.agenda.get(entrada);
+            sb.append(entrada).append(":").append(" ").append(festivales).append("\n");
+        }
+        return sb.toString();
     }
 
     /**
@@ -93,9 +100,11 @@ public class AgendaFestivales {
      * Si el mes no existe se devuelve -1
      */
     public int festivalesEnMes(Mes mes) {
-       //TODO
-        
-        return 0;
+       if(this.agenda.containsKey(mes)){
+           ArrayList<Festival> festivales = this.agenda.get(mes);
+           return festivales.size();
+       }
+       return 0;
     }
 
     /**
