@@ -1,4 +1,5 @@
 
+import java.security.Key;
 import java.time.Month;
 import java.util.*;
 
@@ -116,10 +117,30 @@ public class AgendaFestivales {
      *
      * Identifica el tipo exacto del valor de retorno
      */
-    public  Map   festivalesPorEstilo() {
+    public TreeMap<Estilo, TreeSet<Festival>>  festivalesPorEstilo() {
        //TODO
+        Set<Mes> conjuntoClavesAgenda = this.agenda.keySet();
 
-         
+        //Se crea la estructura de datos que devolvera el metodo:
+        TreeMap<Estilo, TreeSet<Festival>> festivalesPorEstilo = new TreeMap<>();
+
+        //Se anyaden todas sus claves (estilos), con valores nulos que luego seran anyadidos
+        for (Estilo estilo: Estilo.values()){
+            festivalesPorEstilo.put(estilo,null);
+        }
+        ArrayList<Festival> festivales;
+        for (Mes mes: conjuntoClavesAgenda){
+            festivales = this.agenda.get(mes);
+            for (Festival festival: festivales){
+                HashSet<Estilo> conjuntoEstilos = festival.getEstilos();
+                for (Estilo estilo: conjuntoEstilos){
+                    TreeSet<Festival> valorFestivalesPorEstilo = festivalesPorEstilo.get(estilo);
+                    valorFestivalesPorEstilo.add(festival);
+                }
+            }
+
+        }
+
 
         return null;
     }
