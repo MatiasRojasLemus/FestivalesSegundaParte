@@ -1,7 +1,6 @@
 
 import java.time.LocalDate;
 import java.time.Month;
-import java.time.chrono.IsoChronology;
 import java.util.HashSet;
 
 /**
@@ -57,7 +56,7 @@ public class Festival {
      * devuelve el mes de celebración del festival, como
      * valor enumerado
      */
-    public Month getMes() {
+    public Mes getMes() {
         //TODO
         return this.fechaInicio.getMonth();
     }

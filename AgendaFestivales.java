@@ -1,9 +1,6 @@
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
+import java.time.Month;
+import java.util.*;
 
 
 /**
@@ -35,7 +32,7 @@ public class AgendaFestivales {
      * con dicha clave y la colección formada por ese único festival
      *
      * Si la clave (el mes) ya existe se añade el nuevo festival
-     * a la lista de festivales que ya existe ese ms
+     * a la lista de festivales que ya existe ese mes
      * insertándolo de forma que quede ordenado por nombre de festival.
      * Para este segundo caso usa el método de ayuda
      * obtenerPosicionDeInsercion()
@@ -43,7 +40,15 @@ public class AgendaFestivales {
      */
     public void addFestival(Festival festival) {
         //TODO
-        
+        if(!this.agenda.containsKey(festival.getMes())){
+            ArrayList<Festival> valorNuevaClave = new ArrayList<>();
+            valorNuevaClave.add(festival);
+            this.agenda.put(festival.getMes(),valorNuevaClave);
+        }
+        else {
+            ArrayList<Festival> festivales = this.agenda.get(festival.getMes());
+            festivales.add(obtenerPosicionDeInsercion(festivales,festival),festival);
+        }
         
     }
 
@@ -56,10 +61,17 @@ public class AgendaFestivales {
      */
     private int obtenerPosicionDeInsercion(ArrayList<Festival> festivales,
                                            Festival festival) {
-       //TODO
-        
+        int indice = 0;
+
+        TreeSet<Festival> TSAux = new TreeSet<>(festivales);
+        TSAux.add(festival);
+        for (Festival fest: TSAux){
+            if (fest == festival){
+                return indice;
+            }
+            indice++;
+        }
         return 0;
-        
     }
 
     /**
