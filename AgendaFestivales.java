@@ -160,7 +160,17 @@ public class AgendaFestivales {
      */
     public int cancelarFestivales(HashSet<String> lugares, Mes mes) {
        //TODO
-        
-        return 0;
+        if (this.agenda.containsKey(mes)){
+            ArrayList<Festival> festivalesEnMes = this.agenda.get(mes);
+            for (Festival festival: festivalesEnMes){
+                if (lugares.contains(festival.getLugar())){
+                    festivalesEnMes.remove(festival);
+                }
+            }
+            if (festivalesEnMes.isEmpty()){
+                this.agenda.remove(mes);
+            }
+        }
+        return -1;
     }
 }
