@@ -141,7 +141,39 @@ public class Festival {
     @Override
     public String toString() {
        //TODO
-        return null;
+        StringBuilder sb = new StringBuilder();
+        sb.append(getNombre()).append("\t").append(getEstilos()).append("\n");
+        sb.append(getLugar()).append("\t").append("\n");
+
+
+
+        if (this.getDuracion() == 1){
+            sb.append(this.getFechaInicio()).append("\t");
+        }
+        else {
+            sb.append(this.getFechaInicio()).append("  -  ").append(this.getFechaInicio().plusDays(this.getDuracion()));
+        }
+
+
+        if (this.haConcluido()){
+            sb.append("(concluido)");
+        }
+        else {
+            if (LocalDate.now().isAfter(this.fechaInicio) && LocalDate.now().isBefore(this.fechaInicio.plusDays(this.duracion))){
+                sb.append("(ON)");
+            }
+            else {
+                LocalDate fechaActual = LocalDate.now();
+                int numeroDiaActual = fechaActual.getDayOfMonth();
+                Month mesActual = fechaActual.getMonth();
+                int anyoActual = fechaActual.getYear();
+                int tiempoTardado = LocalDate.of(anyoActual,mesActual,numeroDiaActual).getDayOfYear() - this.getFechaInicio().getDayOfYear();
+                sb.append("(Quedan ").append(tiempoTardado).append(" dias)\n");
+            }
+        }
+
+        sb.append("------------------------------------------------------------").append("\n");
+        return sb.toString();
     }
 
     /**
