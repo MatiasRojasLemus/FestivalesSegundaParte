@@ -17,7 +17,7 @@ public class FestivalesIO {
     public static void cargarFestivales(AgendaFestivales agenda) {
         Scanner sc = null;
         try {
-            sc = new Scanner(FestivalesIO.class.getResourceAsStream("/festivales.csv"));
+            sc = new Scanner(FestivalesIO.class.getResourceAsStream("/festivales/festivales.csv"));
             while (sc.hasNextLine()) {
                 String lineaFestival = sc.nextLine();
                 Festival festival = parsearLinea(lineaFestival);
