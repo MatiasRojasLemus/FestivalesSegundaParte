@@ -1,3 +1,5 @@
+package festivales.modelo;
+
 /**
  * @author Matias Rojas Lemus
  */

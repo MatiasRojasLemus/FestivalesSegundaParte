@@ -1,6 +1,9 @@
-/**
+package festivales.test; /**
  * @author Matias Rojas Lemus
  */
+
+import festivales.io.FestivalesIO;
+import festivales.modelo.*;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -10,7 +13,7 @@ import java.util.TreeSet;
 public class TestAgendaFestivales {
     
     /**
-     * Código para probar la clase AgendaFestivales
+     * Código para probar la clase festivales.modelo.AgendaFestivales
      *
      */
     public static void main(String[] args) {

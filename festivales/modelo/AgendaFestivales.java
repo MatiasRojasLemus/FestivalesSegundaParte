@@ -1,3 +1,5 @@
+package festivales.modelo;
+
 import java.util.*;
 
 
@@ -6,7 +8,7 @@ import java.util.*;
  * en una serie de meses
  *
  * La agenda guardalos festivales en una colecci�n map
- * La clave del map es el mes (un enumerado festivales.modelo.Mes)
+ * La clave del map es el mes (un enumerado festivales.festivales.modelo.festivales.modelo.Mes)
  * Cada mes tiene asociados en una colecci�n ArrayList
  * los festivales  de ese mes
  *
@@ -145,7 +147,7 @@ public class AgendaFestivales {
 
                 //De cada festival se recorren sus estilos en Hashset
                 for (Estilo estilo: conjuntoEstilosDelFestival){
-                    //En cada uno de dichos estilos, las claves/estilo del TreeMap festivalesPorEstilo que coincidan con estos, a su respectivo valor se le anyade el Festival que estuviesemos recorriendo actualmente.
+                    //En cada uno de dichos estilos, las claves/estilo del TreeMap festivalesPorEstilo que coincidan con estos, a su respectivo valor se le anyade el festivales.modelo.Festival que estuviesemos recorriendo actualmente.
                     TreeSet<String> valorFestivalesPorEstilo = festivalesPorEstilo.get(estilo);
                     valorFestivalesPorEstilo.add(festival.getNombre());
                 }
@@ -173,9 +175,9 @@ public class AgendaFestivales {
             //Esta siguiente estructura fue sugerida por el propio IntelliJ:
             festivalesEnMes.removeIf(festival -> lugares.contains(festival.getLugar()));
             /**
-             * Si bien dicha estructura parece funcionar cuando probamos el metodo Main de TestAgendaFestivales,
+             * Si bien dicha estructura parece funcionar cuando probamos el metodo Main de festivales.test.TestAgendaFestivales,
              * la estructura original que iba a poner era la siguiente:
-             *      for (Festival festival: festivalesEnMes){
+             *      for (festivales.modelo.Festival festival: festivalesEnMes){
              *          if (lugares.contains(festival.getLugar())){
              *              festivalesEnMes.remove(festival);
              *          }
