@@ -1,6 +1,3 @@
-
-import java.security.Key;
-import java.time.Month;
 import java.util.*;
 
 
@@ -48,7 +45,8 @@ public class AgendaFestivales {
         }
         else {
             ArrayList<Festival> festivales = this.agenda.get(festival.getMes());
-            festivales.add(obtenerPosicionDeInsercion(festivales,festival),festival);
+            int dondeInsertar = obtenerPosicionDeInsercion(festivales,festival);
+            festivales.add(dondeInsertar,festival);
         }
         
     }
@@ -60,14 +58,20 @@ public class AgendaFestivales {
      * @return la posici�n en la que deber�a ir el nuevo festival
      * de forma que la lista quedase ordenada por nombre
      */
-    private int obtenerPosicionDeInsercion(ArrayList<Festival> festivales,
-                                           Festival festival) {
+    private int obtenerPosicionDeInsercion(ArrayList<Festival> festivales, Festival festival) {
+
         int indice = 0;
 
-        TreeSet<Festival> TSAux = new TreeSet<>(festivales);
-        TSAux.add(festival);
-        for (Festival fest: TSAux){
-            if (fest == festival){
+        festivales.add(festival);
+        TreeSet<String> TSAux = new TreeSet<>();
+        for (Festival nombre: festivales){
+            TSAux.add(nombre.getNombre());
+        }
+        TSAux.add(festival.getNombre());
+
+
+        for (String fest: TSAux){
+            if (fest.equals(festival.getNombre())){
                 return indice;
             }
             indice++;
@@ -117,29 +121,32 @@ public class AgendaFestivales {
      *
      * Identifica el tipo exacto del valor de retorno
      */
-    public TreeMap<Estilo, TreeSet<Festival>>  festivalesPorEstilo() {
+    public TreeMap<Estilo, TreeSet<String>>  festivalesPorEstilo() {
 
         Set<Mes> conjuntoClavesAgenda = this.agenda.keySet();
 
         //Se crea la estructura de datos que devolvera el metodo:
-        TreeMap<Estilo, TreeSet<Festival>> festivalesPorEstilo = new TreeMap<>();
+        TreeMap<Estilo, TreeSet<String>> festivalesPorEstilo = new TreeMap<>();
 
         //Se anyaden todas sus claves (estilos), con valores nulos que luego seran anyadidos
         for (Estilo estilo: Estilo.values()){
-            festivalesPorEstilo.put(estilo,null);
+            festivalesPorEstilo.put(estilo,new TreeSet<String>());
         }
         ArrayList<Festival> festivales;
+
         //Se recorre cada mes de la agenda
         for (Mes mes: conjuntoClavesAgenda){
             festivales = this.agenda.get(mes);
             //De cada mes se recorre todos los festivales
+
             for (Festival festival: festivales){
                 HashSet<Estilo> conjuntoEstilosDelFestival = festival.getEstilos();
+
                 //De cada festival se recorren sus estilos en Hashset
                 for (Estilo estilo: conjuntoEstilosDelFestival){
                     //En cada uno de dichos estilos, las claves/estilo del TreeMap festivalesPorEstilo que coincidan con estos, a su respectivo valor se le anyade el Festival que estuviesemos recorriendo actualmente.
-                    TreeSet<Festival> valorFestivalesPorEstilo = festivalesPorEstilo.get(estilo);
-                    valorFestivalesPorEstilo.add(festival);
+                    TreeSet<String> valorFestivalesPorEstilo = festivalesPorEstilo.get(estilo);
+                    valorFestivalesPorEstilo.add(festival.getNombre());
                 }
             }
 
@@ -162,14 +169,21 @@ public class AgendaFestivales {
        //TODO
         if (this.agenda.containsKey(mes)){
             ArrayList<Festival> festivalesEnMes = this.agenda.get(mes);
-            for (Festival festival: festivalesEnMes){
-                if (lugares.contains(festival.getLugar())){
-                    festivalesEnMes.remove(festival);
-                }
-            }
+            //Esta siguiente estructura fue sugerida por el propio IntelliJ:
+            festivalesEnMes.removeIf(festival -> lugares.contains(festival.getLugar()));
+            /**
+             * Si bien dicha estructura parece funcionar cuando probamos el metodo Main de TestAgendaFestivales,
+             * la estructura original que iba a poner era la siguiente:
+             *      for (Festival festival: festivalesEnMes){
+             *          if (lugares.contains(festival.getLugar())){
+             *              festivalesEnMes.remove(festival);
+             *          }
+             *      }
+             */
             if (festivalesEnMes.isEmpty()){
                 this.agenda.remove(mes);
             }
+            return 1;
         }
         return -1;
     }
