@@ -14,6 +14,7 @@ import java.util.*;
  *
  * Las claves se recuperan en orden alfab�ico
  *
+ * @author Matias Rojas Lemus
  */
 public class AgendaFestivales {
     private TreeMap<Mes, ArrayList<Festival>> agenda;
